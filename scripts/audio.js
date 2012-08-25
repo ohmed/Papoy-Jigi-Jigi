@@ -68,7 +68,7 @@ var player = {
       /*setTimeout( function() {*/ 
       player.audio.play(); //}, 6000 );
 
-      player.drums.src = '/resources/audio/ac_dc/ac_dc_drums.ogg';
+      player.drums.src = '/resources/audio/u2/u2_drums.ogg';
       
       player.drums.play();
 

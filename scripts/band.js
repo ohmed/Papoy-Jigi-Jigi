@@ -1,8 +1,7 @@
 var band = band || {};
 
 band.play = function () {
-  // var tempo = player.audio.duration / band.music.tactNum;
-  var tempo = 186 / band.music.tactNum;
+  var tempo = player.audio.duration / band.music.tactNum;
   var self = this;
   var i = 0;
   var intervalID = setInterval(function () { 
