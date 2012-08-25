@@ -82,7 +82,7 @@
   raws.load('oasis');
   // raws.load('30_seconds_to_mars');
   // raws.load('ac_dc');
-
+  
   music.compose = function (callback) {
 
     var instruments = ['guitar', 'bass', 'vocals'];

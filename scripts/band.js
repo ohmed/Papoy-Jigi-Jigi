@@ -112,7 +112,7 @@ band.guitar = {
 };
 
 band.bass = {
-  play: function () {
-    console.log('bass-play');
+  play: function (notes) {
+    console.log('bass-play ' + notes);
   }
 };
