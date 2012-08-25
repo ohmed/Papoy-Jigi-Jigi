@@ -30,12 +30,21 @@ function addObjects() {
 
 /* model of m1 */
   model = modelLoader.get('m1');
-  mesh = new THREE.Mesh(model.geometry, new THREE.MeshPhongMaterial( { color: 0xffffff, specular : 0x888888, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading } ) );
-  mesh.position.set(0, 0, 0);
-  mesh.scale.set(40, 1, 20);
-  mesh.receiveShadow = true;
+  model.geometry.materials[ 0 ].morphTargets = true;
+  model.geometry.materials[ 4 ].morphTargets = true;
+  mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
+  mesh.position.set(0, 21, 12);
+  mesh.scale.set(8, 8, 8);
+  mesh.receiveShadow = false;
   mesh.castShadow = true;
-  scene.add(mesh);
+  mesh.duration = 600;
+  mesh.frames = [0, 6];
+  mesh.start = 0;
+  mesh.keyframes = mesh.frames[ mesh.frames.length - 1 ];
+  mesh.lastKeyframe = 5;
+  mesh.currentKeyframe = 0;
+  mesh.play = 0;
+  m1 = mesh;
   if (DEBUG) console.log('[scene]: added m1');
 
   addLights();
@@ -56,9 +65,8 @@ function addLights() {
   //light.shadowCameraVisible = true;
   light.castShadow = true;
 
-  // add to the scene
   scene.add(light);
-  console.log( '[scene]: added lights' );
+  console.log( '[scene]: added light {1}' );
 
 }
 
