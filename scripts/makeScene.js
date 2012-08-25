@@ -4,6 +4,8 @@ var camera;
 var lights = [];
 var minions = [];
 
+var m1, m2, m3;
+
 function addObjects() {
 
   var mesh;
@@ -38,14 +40,14 @@ function addObjects() {
   mesh.receiveShadow = false;
   mesh.castShadow = true;
   mesh.duration = 600;
-  mesh.frames = [0, 6];
+  mesh.frames = [0, 6/*30*/];
   mesh.start = 0;
   mesh.keyframes = mesh.frames[ mesh.frames.length - 1 ];
-  mesh.lastKeyframe = 5;
+  mesh.lastKeyframe = 5;//29;
   mesh.currentKeyframe = 0;
   mesh.play = 0;
-  scene.add(mesh);
   m1 = mesh;
+  scene.add(mesh);
   if (DEBUG) console.log('[scene]: added m1');
 
 /* model of m1`s guitar */
@@ -77,7 +79,7 @@ function addObjects() {
   mesh.currentKeyframe = 0;
   mesh.play = 0;
   scene.add(mesh);
-  m1 = mesh;
+  m2 = mesh;
   if (DEBUG) console.log('[scene]: added m2');
 
 /* model of m2`s drums */
@@ -108,7 +110,7 @@ function addObjects() {
   mesh.currentKeyframe = 0;
   mesh.play = 0;
   scene.add(mesh);
-  m1 = mesh;
+  m3 = mesh;
   if (DEBUG) console.log('[scene]: added m3');
 
 /* model of m3`s bass-guitar */

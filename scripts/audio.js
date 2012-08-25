@@ -66,9 +66,10 @@ var player = {
       var url = $($('.list tr')[0]).attr('url');
       player.audio.src = url;
       /*setTimeout( function() {*/ 
-        player.audio.play(); //}, 6000 );
+      player.audio.play(); //}, 6000 );
 
-      player.drums.src = 'resources/audio/u2/u2_drums.ogg';
+      player.drums.src = '/resources/audio/ac_dc/ac_dc_drums.ogg';
+      
       player.drums.play();
 
       player.audio.addEventListener( 'timeupdate', player.time );
@@ -78,7 +79,10 @@ var player = {
         player.analyser = player.context.createAnalyser(),
         player.analyser.smoothingTimeConstant = 0.4;
         player.source.connect(player.analyser);
-        player.source.connect(player.context.destination);
+        var gainNode = player.context.createGainNode();
+        player.source.connect(gainNode);
+        gainNode.gain.value = 0;
+        gainNode.connect(player.context.destination);
         player.analInt = setInterval(player.analyserProcessor, 35);
         $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
         band.tune();

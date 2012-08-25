@@ -48,7 +48,7 @@ band.vocals = {
       self._animateMouth[chars[j]]();
       j++; 
       if (chars[j] !== '-') {
-        // m1.duration = (tempo / chars.length) * 1000;
+        m1.duration = (tempo / chars.length) * 1000;
       }
       if(j >= chars.length) 
         clearInterval(intervalID);
@@ -57,23 +57,23 @@ band.vocals = {
   _animateMouth: {
     'a': function () {
       console.log('a');
-      // m1.play = 3;
+      m1.play = 3;
     },
     'e': function () {
       console.log('e');
-      // m1.play = 3;
+      m1.play = 3;
     },
     'i': function () {
       console.log('i');
-      // m1.play = 5;
+      m1.play = 5;
     },
     'o': function () {
       console.log('o');
-      // m1.play = 2;
+      m1.play = 2;
     }, 
     'u': function () {
       console.log('u');
-      // m1.play = 4;
+      m1.play = 4;
     },
     'y': function () {
       console.log('y');
@@ -93,11 +93,11 @@ band.drums = {
 band.guitar = {
   play: function (notes) {
     console.log('guitar-play ' + notes);
-    /*var tactDuration = 1000 * player.audio.duration / band.music.tactNum;
+    var tactDuration = 1000 * player.audio.duration / band.music.tactNum;
     m1.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
-      if ( notes[i] !== 0 ) {
+      if ( notes[i] !== '-' ) {
         setTimeout( function() {
           if (m1.play === 0) {
             m1.play = 1;
@@ -107,7 +107,7 @@ band.guitar = {
       } else {
         inter += m1.duration - 20;
       }
-    }*/
+    }
   }
 };
 

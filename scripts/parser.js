@@ -72,7 +72,8 @@
                             .replace(/\r\n/g,'%')
                             .replace(/\$\%/g,'$')
                             .replace(/\|\%/g,'%')
-                            .replace(/\|\$/g,'$');
+                            .replace(/\|\$/g,'$')
+                            .replace(/[Lsg]/g, '-');
           self.loaded += 1;
         }
       });
@@ -80,8 +81,8 @@
   };
 
   // raws.load('oasis');
-  raws.load('u2');
-  // raws.load('ac_dc');
+  //raws.load('u2');
+   raws.load('ac_dc');
   
   music.compose = function (callback) {
 
@@ -128,7 +129,7 @@
 
     for (var i = 0; i < music.vocals.length; i++) {
       for (var j = 0; j < music.vocals[i].length; j++) {
-        if (music.vocals[i][j] !== '-') {
+        if (music.vocals[i][j] !== '-' ) {
           music.vocals[i][j] = raws.lyrics.pop() || 'o';
         }
       }
