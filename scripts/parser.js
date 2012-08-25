@@ -22,7 +22,7 @@
 
     _filePath: {
       'ac_dc': '/resources/audio/ac_dc/',
-      'red_hot_chili_peppers' : '/resources/audio/red_hot_chili_peppers/',
+      'u2' : '/resources/audio/u2/',
       'oasis' : '/resources/audio/oasis/'
     },
 
@@ -79,8 +79,8 @@
     }
   };
 
-  raws.load('oasis');
-  // raws.load('red_hot_chili_peppers');
+  // raws.load('oasis');
+  raws.load('u2');
   // raws.load('ac_dc');
   
   music.compose = function (callback) {
