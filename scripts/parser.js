@@ -22,7 +22,7 @@
 
     _filePath: {
       'ac_dc': '/resources/audio/ac_dc/',
-      '30_seconds_to_mars' : '/resources/audio/30_seconds_to_mars/',
+      'red_hot_chili_peppers' : '/resources/audio/red_hot_chili_peppers/',
       'oasis' : '/resources/audio/oasis/'
     },
 
@@ -80,7 +80,7 @@
   };
 
   raws.load('oasis');
-  // raws.load('30_seconds_to_mars');
+  // raws.load('red_hot_chili_peppers');
   // raws.load('ac_dc');
   
   music.compose = function (callback) {
