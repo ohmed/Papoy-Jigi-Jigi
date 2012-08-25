@@ -60,6 +60,36 @@ function animate() {
 
   }
 
+  if (m3 && m3.play) {
+
+    var mesh = m3;
+
+    var interpolation = mesh.duration / mesh.keyframes;
+    
+    var time = Date.now() % mesh.duration;
+
+    mesh.keyframe = (m3.play - 1) * 7 + Math.floor( time / interpolation );
+
+    if ( mesh.keyframe != mesh.currentKeyframe ) {
+
+      mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.currentKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.keyframe ] = 0;
+
+      mesh.lastKeyframe = mesh.currentKeyframe;
+      mesh.currentKeyframe = mesh.keyframe;
+
+      if (mesh.keyframe == m3.play * 7) {
+        m3.play = 0;
+      }
+
+    }
+
+    mesh.morphTargetInfluences[ mesh.keyframe ] = ( time % interpolation ) / interpolation;
+    mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 1 - mesh.morphTargetInfluences[ mesh.keyframe ];
+
+  }
+
 }
 
 function render() {

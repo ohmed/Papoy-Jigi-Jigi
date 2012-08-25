@@ -177,6 +177,9 @@ function preparations() {
 /* adding models to scene */
   addObjects();
 
+/* adding fog */
+  scene.fog = new THREE.Fog( 0xffffff, 140, 210 );
+
 /* render stat */
   var container = document.createElement( 'div' );
   document.body.appendChild( container );
