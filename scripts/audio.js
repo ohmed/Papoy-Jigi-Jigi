@@ -103,6 +103,7 @@ var player = {
     }
 
     if (player.audio.src === '' || trackInf !== undefined) {
+
       player.currTrack = track;
       parser.clear();
       parser.raws.load( track );
@@ -147,6 +148,12 @@ var player = {
           band.tune();
         }, 30 );
 
+        var n = 0;
+        if (player.currTrack == 'oasis') n = 1;
+        if (player.currTrack == 'u2') n = 2;
+        $('tr span').html('');
+        $($('tr span')[n]).html(' (ON)');
+        
       }
 
       return;

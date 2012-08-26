@@ -10,6 +10,16 @@ function addObjects() {
 
   var mesh;
 
+/* plakat */
+  var geometry  = new THREE.CubeGeometry( 10, 0.5, 10);
+  mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial( { color: 0xffffff, specular : 0x888888, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading, map: THREE.ImageUtils.loadTexture('/resources/img/plakat.png') } ) );
+  mesh.position.set(0, 45, -40);
+  mesh.scale.set(15, 25, 5);
+  mesh.receiveShadow = true;
+  mesh.castShadow = true;
+  scene.add(mesh);
+  if (DEBUG) console.log('[scene]: added ground');
+
 /* ground */
   var geometry  = new THREE.CubeGeometry( 10, 0.5, 10);
   mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial( { color: 0xffffff, specular : 0x888888, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading} ) );
@@ -252,7 +262,7 @@ function preparations() {
 
 /* add camera */
   camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
-  camera.position.set(2, 50, 110);
+  camera.position.set(2, 50, 132);
   camera.rotation.set(-0.2, 0, 0);
   scene.add( camera );
 
@@ -263,13 +273,13 @@ function preparations() {
   scene.fog = new THREE.Fog( 0xffffff, 140, 210 );
 
 /* render stat */
-  var container = document.createElement( 'div' );
+  /*var container = document.createElement( 'div' );
   container.id = 'stat';
   document.body.appendChild( container );
   stats = new Stats();
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.top = '0px';
-  container.appendChild( stats.domElement );
+  container.appendChild( stats.domElement );*/
    
   /* set WebGL rendering */
   renderer = new THREE.WebGLRenderer( { clearColor: 0xffffff, clearAlpha: 1, antialias: false } );
@@ -351,7 +361,7 @@ note The full stack trace of the root cause is available in the Apache Tomcat/5.
 \r\n\
 Apache Tomcat/5.5.17'.split('\r\n');
   var i = 0;
-  $('#stat').css('display', 'none');
+  //$('#stat').css('display', 'none');
   var inter = setInterval(function () {
     $('#error-screen').append('<span>' + error[i] + '</span><br>');
     i++;
@@ -362,5 +372,5 @@ Apache Tomcat/5.5.17'.split('\r\n');
       $('#error-screen').css('background-size', 'cover');
       clearInterval(inter);
     }      
-  }, 50);
+  }, 30);
 }
