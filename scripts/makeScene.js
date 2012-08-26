@@ -4,7 +4,7 @@ var camera;
 var lights = [];
 var minions = [];
 
-var m1, m2, m3;
+var m1, m2, m3, m4;
 
 function addObjects() {
 
@@ -35,7 +35,7 @@ function addObjects() {
   model.geometry.materials[ 0 ].morphTargets = true;
   model.geometry.materials[ 4 ].morphTargets = true;
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(0, 21, 12);
+  mesh.position.set(5, 21, 20);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -50,15 +50,15 @@ function addObjects() {
   scene.add(mesh);
   if (DEBUG) console.log('[scene]: added m1');
 
-/* model of m1`s guitar */
-  model = modelLoader.get('m1-guitar');
+/* model of m1`s microphone */
+  model = modelLoader.get('m1-microphone');
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(0, 21, 12);
+  mesh.position.set(5, 21, 20);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
   mesh.doubleSided = true;
-  m1g = mesh;
+  m1m = mesh;
   scene.add(mesh);
   if (DEBUG) console.log('[scene]: added m1`s guitar');
 
@@ -67,7 +67,7 @@ function addObjects() {
   model.geometry.materials[ 0 ].morphTargets = true;
   model.geometry.materials[ 4 ].morphTargets = true;
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(-40, 22, 0);
+  mesh.position.set(-25, 22, -10);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -85,7 +85,7 @@ function addObjects() {
 /* model of m2`s drums */
   model = modelLoader.get('m2-drums');
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(-40, 22, 0);
+  mesh.position.set(-25, 22, -10);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -95,10 +95,10 @@ function addObjects() {
 
 /* model of m3 */
   model = modelLoader.get('m3');
-  model.geometry.materials[ 0 ].morphTargets = true;
-  model.geometry.materials[ 4 ].morphTargets = true;
+  for (var i = 0; i<model.geometry.materials.length; i++)
+    model.geometry.materials[ i ].morphTargets = true;
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(35, 20, 12);
+  mesh.position.set(-50, 20, 12);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -116,7 +116,7 @@ function addObjects() {
 /* model of m3`s bass-guitar */
   model = modelLoader.get('m3-guitar');
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(35, 20, 12);
+  mesh.position.set(-50, 20, 12);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -125,6 +125,38 @@ function addObjects() {
   scene.add(mesh);
   if (DEBUG) console.log('[scene]: added m3`s bass-guitar');
 
+
+/* model of m4 */
+  model = modelLoader.get('m4');
+  for (var i = 0; i<model.geometry.materials.length; i++)
+    model.geometry.materials[ i ].morphTargets = true;
+  mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
+  mesh.position.set(45, 20, 3);
+  mesh.scale.set(8, 8, 8);
+  mesh.receiveShadow = false;
+  mesh.castShadow = true;
+  mesh.duration = 600;
+  mesh.frames = [0, 5];
+  mesh.start = 0;
+  mesh.keyframes = mesh.frames[ mesh.frames.length - 1 ];
+  mesh.lastKeyframe = 5;
+  mesh.currentKeyframe = 0;
+  mesh.play = 0;
+  scene.add(mesh);
+  m4 = mesh;
+  if (DEBUG) console.log('[scene]: added m4');
+
+/* model of m4`s guitar */
+  model = modelLoader.get('m4-guitar');
+  mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
+  mesh.position.set(45, 20, 3);
+  mesh.scale.set(8, 8, 8);
+  mesh.receiveShadow = false;
+  mesh.castShadow = true;
+  mesh.doubleSided = true;
+  m4g = mesh;
+  scene.add(mesh);
+  if (DEBUG) console.log('[scene]: added m4`s guitar');
 
   addLights();
 }
@@ -153,13 +185,15 @@ function loadModels() {
 
 /* load models */
   modelLoader = new ModelLoader( preparations );
-  modelLoader.totalObjects = 6;
+  modelLoader.totalObjects = 8;
   modelLoader.load( { name: 'm1', model: 'resources/models/m1.js' } );
-  modelLoader.load( { name: 'm1-guitar', model: 'resources/models/guitar.js' } );
+  modelLoader.load( { name: 'm1-microphone', model: 'resources/models/microphone.js' } );
   modelLoader.load( { name: 'm2', model: 'resources/models/m2.js' } );
   modelLoader.load( { name: 'm2-drums', model: 'resources/models/drums.js' } );
   modelLoader.load( { name: 'm3', model: 'resources/models/m3.js' } );
   modelLoader.load( { name: 'm3-guitar', model: 'resources/models/bass-guitar.js' } );
+  modelLoader.load( { name: 'm4', model: 'resources/models/m4.js' } );
+  modelLoader.load( { name: 'm4-guitar', model: 'resources/models/guitar.js' } );
 
 }
 

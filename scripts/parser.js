@@ -10,8 +10,7 @@
     'guitar': [],
     'bass': [],
     'vocals': [],
-    'tactNum': 0,
-    'artist': null
+    'tactNum': 0
   }
 
   var raws = {
@@ -29,7 +28,6 @@
 
     load: function (song) {
       song = song || 'ac_dc';
-      music.song = song;
       var self = this;
       $.ajax({
         url: self._filePath[song] + 'bass.txt',
@@ -82,9 +80,9 @@
     }
   };
 
-  // raws.load('oasis');
+  //raws.load('oasis');
+  //raws.load('u2');
   raws.load('u2');
-  // raws.load('ac_dc');
   
   music.compose = function (callback) {
 
@@ -132,8 +130,7 @@
     for (var i = 0; i < music.vocals.length; i++) {
       for (var j = 0; j < music.vocals[i].length; j++) {
         if (music.vocals[i][j] !== '-' ) {
-          var symbol = raws.lyrics.pop();
-          music.vocals[i][j] = symbol || 'e';
+          music.vocals[i][j] = raws.lyrics.pop() || 'o';
         }
       }
     }

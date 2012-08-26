@@ -47,7 +47,7 @@ band.vocals = {
       self._animateMouth[chars[j]]();
       j++; 
       if (chars[j] !== '-') {
-        m1.duration = (tempo / chars.length) * 1000;
+        m1.duration = (tempo / chars.length) * 3000;
       }
       if(j >= chars.length) 
         clearInterval(intervalID);
@@ -56,23 +56,28 @@ band.vocals = {
   _animateMouth: {
     'a': function () {
       console.log('a');
-      m1.play = 3;
+      if (!m1.play)
+        m1.play = 3;
     },
     'e': function () {
       console.log('e');
-      m1.play = 3;
+      if (!m1.play)
+        m1.play = 3;
     },
     'i': function () {
       console.log('i');
-      m1.play = 5;
+      if (!m1.play)
+        m1.play = 5;
     },
     'o': function () {
       console.log('o');
-      m1.play = 2;
+      if (!m1.play)
+        m1.play = 2;
     }, 
     'u': function () {
       console.log('u');
-      m1.play = 4;
+      if (!m1.play)
+        m1.play = 4;
     },
     'y': function () {
       console.log('y');
@@ -93,18 +98,18 @@ band.guitar = {
   play: function (notes) {
     console.log('guitar-play ' + notes);
     var tactDuration = 1000 * player.audio.duration / band.music.tactNum;
-    m1.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
+    m4.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
       if ( notes[i] !== '-' ) {
         setTimeout( function() {
-          if (m1.play === 0) {
-            m1.play = 1;
+          if (m4.play === 0) {
+            m4.play = 1;
           }
         }, inter);
-        inter += m1.duration + 30;
+        inter += m4.duration + 30;
       } else {
-        inter += m1.duration - 20;
+        inter += m4.duration - 20;
       }
     }
   }
@@ -113,5 +118,20 @@ band.guitar = {
 band.bass = {
   play: function (notes) {
     console.log('bass-play ' + notes);
+    var tactDuration = 5000 * player.audio.duration / band.music.tactNum;
+    m3.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
+    var inter = 0;
+    for (var i = 0; i<notes.length; i++) {
+      if ( notes[i] !== '-' ) {
+        setTimeout( function() {
+          if (m3.play === 0) {
+            m3.play = Math.round( Math.random() ) + 1;
+          }
+        }, inter);
+        inter += m3.duration + 30;
+      } else {
+        inter += m3.duration - 20;
+      }
+    }
   }
 };
