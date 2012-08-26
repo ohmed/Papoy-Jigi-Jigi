@@ -285,11 +285,14 @@ function preparations() {
 
 function start() {
   $('.startBtn').animate( {'width': '0px', 'left': '150px', 'opacity': '0'}, 300, function() {
+    $('.warning').css('display', 'none');
     $(this).css('display', 'none');
     $('.player').css('display', 'block');
     setTimeout( function() { $('.player').animate({'opacity': '1'}, 1300); }, 1000);
     player.init();
     loadModels();
   } );
+  $('.warning').css('display', 'none');
+
   $('body').css( { 'background-color': '#fff' } );
 }

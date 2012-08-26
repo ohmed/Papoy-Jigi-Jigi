@@ -50,3 +50,41 @@ body {
 .footer {
   
 }
+
+.warning {
+  position: absolute;
+  z-index: 99;
+  width: 60%;
+  height: 50%;
+  background: transparent;
+  color: white;
+  padding: 15% 10%;
+}
+
+.warning img{
+  width: 10%;
+  height: 12%;
+  position: absolute;
+  z-index: -1;
+  margin: 0 15%;
+}
+
+.warning span{
+  width: 40%;
+  height: 10%;
+  position: absolute;
+  z-index: -1;
+  margin: 8% 30%;
+  font:17px arial,sans-serif;
+}
+
+.warning span#attention{
+  width: 40%;
+  height: 10%;
+  position: absolute;
+  z-index: -1;
+  margin: 0 27%;
+  font: 21px arial, sans-serif;
+  font-weight: bold;
+  color: yellow;
+}
