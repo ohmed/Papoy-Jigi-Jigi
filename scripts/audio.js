@@ -81,6 +81,16 @@ var player = {
       m4.play = 0;
       m4.currentKeyframe = 0;
       clearTimeout( m4.timeout );
+
+      if (player.currTrack.split(':')[0] == 'u2') {
+        theEnd();
+        return;
+      }
+
+      var n = 1;
+      if (player.currTrack == 'oasis') n = 2;
+      player.play( $($('.list tr')[n]).attr('track') );
+
     }
   },
   play: function( trackInf ) {
@@ -142,13 +152,31 @@ var player = {
       return;
     }
 
-    /*if (!player.audio.paused) {
+    if (!player.audio.paused) {
       $('.playBtn').css('background-image', 'url("/resources/img/play.png")');
+      player.drums.pause();
       player.audio.pause();
+
+      m1.play = 0;
+      m1.currentKeyframe = 0;
+      m2.play = 0;
+      m2.currentKeyframe = 0;
+      m3.play = 0;
+      m3.currentKeyframe = 0;
+      clearTimeout( m3.timeout );
+      m3.timeout = 'x';
+      m4.play = 0;
+      m4.currentKeyframe = 0;
+      clearTimeout( m4.timeout );
+      m4.timeout = 'x';
+
+      clearInterval(band.interval);
     } else {
       $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
       player.audio.play();
-    }*/
+      player.drums.play();
+      band.play();
+    }
 
   },
   playTrack: function() {

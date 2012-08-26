@@ -264,6 +264,7 @@ function preparations() {
 
 /* render stat */
   var container = document.createElement( 'div' );
+  container.id = 'stat';
   document.body.appendChild( container );
   stats = new Stats();
   stats.domElement.style.position = 'absolute';
@@ -350,6 +351,7 @@ note The full stack trace of the root cause is available in the Apache Tomcat/5.
 \r\n\
 Apache Tomcat/5.5.17'.split('\r\n');
   var i = 0;
+  $('#stat').css('display', 'none');
   var inter = setInterval(function () {
     $('#error-screen').append('<span>' + error[i] + '</span><br>');
     i++;

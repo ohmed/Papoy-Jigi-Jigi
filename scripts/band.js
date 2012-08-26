@@ -2,23 +2,24 @@ var band = band || {};
 
 band.interval = false;
 
+band.tackt = 0;
+
 band.play = function () {
   var tempo = player.duration / band.music.tactNum;
   var self = this;
-  var i = 0;
   band.interval = setInterval(function () { 
 
-    band.guitar.play(band.music.guitar[i]);
+    band.guitar.play(band.music.guitar[band.tackt]);
 
-    band.bass.play(band.music.bass[i]);
+    band.bass.play(band.music.bass[band.tackt]);
 
-    band.vocals.play(band.music.vocals[i], tempo);
+    band.vocals.play(band.music.vocals[band.tackt], tempo);
     
-    i++; 
+    band.tackt++; 
 
-    if (i >= band.music.tactNum) {
+    if (band.tackt >= band.music.tactNum) {
       band.finish();
-      clearInterval(intervalID);
+      clearInterval(band.interval);
     }
 
   }, ( tempo ) * 1000 );
@@ -26,6 +27,7 @@ band.play = function () {
 };
 
 band.tune = function () {
+  band.tackt = 0;
   var intervalID = setInterval(function () {
     console.log('tuning');
     if (typeof band.music !== 'undefined') {

@@ -30,7 +30,7 @@ function animate() {
       mesh.morphTargetInfluences[ mesh.keyframe ] = 0;
       mesh.lastKeyframe = mesh.currentKeyframe;
       mesh.currentKeyframe = mesh.keyframe;
-      if (mesh.keyframe == m2.play * 6) {
+      if (mesh.keyframe == m2.play * 5) {
         m2.play = 0;
       }
     }
