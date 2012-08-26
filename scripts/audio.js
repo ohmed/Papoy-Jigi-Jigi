@@ -67,6 +67,21 @@ var player = {
     var sec = (t % 60>9) ? t % 60: '0' + t % 60;
     $('.time').html( min + ':' + sec );
     $('.progress').css( 'width', 100 * (t/player.audio.duration) + '%' );
+
+    if (player.audio.duration === player.audio.currentTime) {
+      clearInterval(band.interval);
+      parser.clear();
+      m1.play = 0;
+      m1.currentKeyframe = 0;
+      m2.play = 0;
+      m2.currentKeyframe = 0;
+      m3.play = 0;
+      m3.currentKeyframe = 0;
+      clearTimeout( m3.timeout );
+      m4.play = 0;
+      m4.currentKeyframe = 0;
+      clearTimeout( m4.timeout );
+    }
   },
   play: function( trackInf ) {
 
