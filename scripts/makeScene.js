@@ -4,7 +4,7 @@ var camera;
 var lights = [];
 var minions = [];
 
-var m1, m2, m3, m4;
+var m1, m2, m3, m4, d1, d2;
 
 function addObjects() {
 
@@ -131,7 +131,7 @@ function addObjects() {
   for (var i = 0; i<model.geometry.materials.length; i++)
     model.geometry.materials[ i ].morphTargets = true;
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(45, 20, 3);
+  mesh.position.set(40, 20, 3);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -149,7 +149,7 @@ function addObjects() {
 /* model of m4`s guitar */
   model = modelLoader.get('m4-guitar');
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
-  mesh.position.set(45, 20, 3);
+  mesh.position.set(40, 20, 3);
   mesh.scale.set(8, 8, 8);
   mesh.receiveShadow = false;
   mesh.castShadow = true;
@@ -157,6 +157,52 @@ function addObjects() {
   m4g = mesh;
   scene.add(mesh);
   if (DEBUG) console.log('[scene]: added m4`s guitar');
+
+/* model of left dynamic */
+  model = modelLoader.get('dynamics');
+  model.geometry.materials[ 0 ].morphTargets = true;
+  model.geometry.materials[ 1 ].morphTargets = true;
+  model.geometry.materials[ 2 ].morphTargets = true;
+  mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
+  mesh.position.set(-65, 10, 25);
+  mesh.rotation.set(0, 3.6, 0);
+  mesh.scale.set(7, 7, 7);
+  mesh.receiveShadow = false;
+  mesh.castShadow = true;
+  mesh.doubleSided = true;
+  mesh.duration = 200;
+  mesh.frames = [0, 10];
+  mesh.start = 0;
+  mesh.keyframes = mesh.frames[ mesh.frames.length - 1 ];
+  mesh.lastKeyframe = 10;
+  mesh.currentKeyframe = 0;
+  mesh.play = 0;
+  d1 = mesh;
+  scene.add(mesh);
+  if (DEBUG) console.log('[scene]: added left dynamic');
+
+/* model of right dynamic */
+  model = modelLoader.get('dynamics');
+  model.geometry.materials[ 0 ].morphTargets = true;
+  model.geometry.materials[ 1 ].morphTargets = true;
+  model.geometry.materials[ 2 ].morphTargets = true;
+  mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0x000000, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
+  mesh.position.set(65, 10, 25);
+  mesh.rotation.set(0, 2.3, 0);
+  mesh.scale.set(7, 7, 7);
+  mesh.receiveShadow = false;
+  mesh.castShadow = true;
+  mesh.doubleSided = true;
+  mesh.duration = 200;
+  mesh.frames = [0, 10];
+  mesh.start = 0;
+  mesh.keyframes = mesh.frames[ mesh.frames.length - 1 ];
+  mesh.lastKeyframe = 10;
+  mesh.currentKeyframe = 0;
+  mesh.play = 0;
+  d2 = mesh;
+  scene.add(mesh);
+  if (DEBUG) console.log('[scene]: added right dynamic');
 
   addLights();
 }
@@ -185,7 +231,7 @@ function loadModels() {
 
 /* load models */
   modelLoader = new ModelLoader( preparations );
-  modelLoader.totalObjects = 8;
+  modelLoader.totalObjects = 9;
   modelLoader.load( { name: 'm1', model: 'resources/models/m1.js' } );
   modelLoader.load( { name: 'm1-microphone', model: 'resources/models/microphone.js' } );
   modelLoader.load( { name: 'm2', model: 'resources/models/m2.js' } );
@@ -194,6 +240,7 @@ function loadModels() {
   modelLoader.load( { name: 'm3-guitar', model: 'resources/models/bass-guitar.js' } );
   modelLoader.load( { name: 'm4', model: 'resources/models/m4.js' } );
   modelLoader.load( { name: 'm4-guitar', model: 'resources/models/guitar.js' } );
+  modelLoader.load( { name: 'dynamics', model: 'resources/models/dynamics.js' } );
 
 }
 

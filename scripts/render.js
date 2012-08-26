@@ -76,6 +76,50 @@ function animate() {
     mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 1 - mesh.morphTargetInfluences[ mesh.keyframe ];
   }
 
+  if (d1 && d1.play) {
+    var mesh = d1;
+    var interpolation = mesh.duration / mesh.keyframes;
+    var time = Date.now() % mesh.duration;
+    mesh.keyframe = Math.floor( time / interpolation );
+    if ( mesh.keyframe != mesh.currentKeyframe ) {
+      mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.currentKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.keyframe ] = 0;
+      mesh.lastKeyframe = mesh.currentKeyframe;
+      mesh.currentKeyframe = mesh.keyframe;
+      if (mesh.keyframe==3 && d1.play==2) {
+        mesh.keyframe = 7;
+      }
+      if (mesh.keyframe == 9) {
+        d1.play = 0;
+      }
+    }
+    mesh.morphTargetInfluences[ mesh.keyframe ] = ( time % interpolation ) / interpolation;
+    mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 1 - mesh.morphTargetInfluences[ mesh.keyframe ];
+  }
+
+  if (d2 && d2.play) {
+    var mesh = d2;
+    var interpolation = mesh.duration / mesh.keyframes;
+    var time = Date.now() % mesh.duration;
+    mesh.keyframe = Math.floor( time / interpolation );
+    if ( mesh.keyframe != mesh.currentKeyframe ) {
+      mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.currentKeyframe ] = 0;
+      mesh.morphTargetInfluences[ mesh.keyframe ] = 0;
+      mesh.lastKeyframe = mesh.currentKeyframe;
+      mesh.currentKeyframe = mesh.keyframe;
+      if (mesh.keyframe==3 && d2.play==2) {
+        mesh.keyframe = 7;
+      }
+      if (mesh.keyframe == 9) {
+        d2.play = 0;
+      }
+    }
+    mesh.morphTargetInfluences[ mesh.keyframe ] = ( time % interpolation ) / interpolation;
+    mesh.morphTargetInfluences[ mesh.lastKeyframe ] = 1 - mesh.morphTargetInfluences[ mesh.keyframe ];
+  }
+
 }
 
 function render() {

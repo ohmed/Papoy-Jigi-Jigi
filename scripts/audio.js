@@ -31,7 +31,11 @@ var player = {
         var d = freqByteData1[i] - tmp[i];
         sum += d;
       }
-      if (sum>50) console.log('BUM!');
+      if (sum>50) {
+        console.log('BUM!');
+        d1.play = 1;
+        d2.play = 1;
+      }
 
       sum = 0;
       for (var i = 0; i < 1; ++i) {
@@ -40,6 +44,8 @@ var player = {
       }
       if (sum<50 & sum>10 ) {
         console.log('bemc!');
+        d1.play = 2;
+        d2.play = 2;
         m2.play = Math.round(Math.random() + 2);
       }
 
