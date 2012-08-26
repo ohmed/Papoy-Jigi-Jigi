@@ -6,7 +6,7 @@ setInterval( function() {
 
 var player = {
   audio: new Audio(),
-  drums: new Audio(),
+  drums: false,
   currend: 0,
   list: [],
   source: false,
@@ -15,6 +15,7 @@ var player = {
   volumeLevel: 0,
   analInt: 0,
   bitData: [],
+  currTrack: false,
   analyserProcessor: function() {
     var freqByteData = new Uint8Array(player.analyser.frequencyBinCount);
     player.analyser.getByteFrequencyData(freqByteData);
@@ -67,15 +68,34 @@ var player = {
     $('.time').html( min + ':' + sec );
     $('.progress').css( 'width', 100 * (t/player.audio.duration) + '%' );
   },
-  play: function() {
-    if (player.audio.src === '') {
-      var url = $($('.list tr')[0]).attr('url');
-      player.audio.src = url;
-      /*setTimeout( function() {*/ player.audio.play(); //}, 4000 );
+  play: function( trackName ) {
 
-      player.drums.src = '/resources/audio/ac_dc/ac_dc_drums.ogg';
+    var track;
+    if (trackName === undefined) {
+      track = $($('.list tr')[0]).attr('track');
+    } else {
+      track = trackName;
+    }
+
+    if (player.audio.src === '' || trackName !== undefined) {
+      player.currTrack = track;
+      parser.clear();
+      parser.raws.load( track );
+      m1.play = 0;
+      m2.play = 0;
+      m3.play = 0;
+      m4.play = 0;
+      var url = '/resources/audio/' + track + '/' + track + '.ogg';
+      player.duration = 4*60 + 15;
+      player.audio.src = url;
+
+      player.audio.play();
+
+      player.drums.src = '';
+      player.drums = new Audio();
+      player.drums.src = '/resources/audio/' + track + '/' + track + '_drums.ogg';
       
-      /*setTimeout( function() {*/ player.drums.play(); //}, 1000);
+      player.drums.play();
 
       player.audio.addEventListener( 'timeupdate', player.time );
 
@@ -86,7 +106,7 @@ var player = {
         player.source.connect(player.analyser);
         player.analInt = setInterval(player.analyserProcessor, 35);
         $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
-        setTimeout( function() { band.tune(); }, 1);
+        band.tune();
       }, 30 );
 
       return;
@@ -102,7 +122,8 @@ var player = {
 
   },
   playTrack: function() {
-
+    clearInterval(band.interval);
+    player.play( $(this).attr('track') );
   },
   init: function() {
     
@@ -121,7 +142,7 @@ var player = {
       }
     });
 
-    $('.playBtn').click(player.play);
+    $('.playBtn').click( function() { player.play(); } );
 
     $('.list tr').click(player.playTrack);
 

@@ -1,19 +1,25 @@
-(function(){
+var parser = {
 
-  var tabs = {
+  tabs: {
     'guitar': [[],[],[],[],[],[]],
     'bass': [[],[],[],[]],
     'vocals': [[],[],[],[],[],[]]
-  };
+  },
 
-  var music = {
+  music: {
     'guitar': [],
     'bass': [],
     'vocals': [],
     'tactNum': 0
-  }
+  },
 
-  var raws = {
+  clear: function() {
+    this.raws.loaded = 0;
+    this.tabs = {'guitar': [[],[],[],[],[],[]],'bass': [[],[],[],[]],'vocals': [[],[],[],[],[],[]]};
+    this.music = {'guitar': [],'bass': [],'vocals': [],'tactNum': 0};
+  },
+
+  raws: {
     'guitar': null,
     'bass': null,
     'vocals': null,
@@ -38,6 +44,8 @@
                             .replace(/\|\%/g,'%')
                             .replace(/\|\$/g,'$');
           self.loaded += 1;
+
+          if (self.loaded === 4) parser.finish();
         }
       });
       $.ajax({
@@ -49,13 +57,16 @@
                             .replace(/\|\%/g,'%')
                             .replace(/\|\$/g,'$');
           self.loaded += 1;
+
+          if (self.loaded === 4) parser.finish();
+
         }
       });
       $.ajax({
         url: self._filePath[song] + 'lyrics.txt',
         success: function (data) {
           self.lyrics = data;
-          self.loaded += 1;          
+          self.loaded += 1;
           var lyricsTemp = self.lyrics;
           self.lyrics = [];
           for (var i = 0; i < lyricsTemp.length; i++) {
@@ -63,6 +74,7 @@
               self.lyrics.push(lyricsTemp[i]);
             }
           }
+          if (self.loaded === 4) parser.finish();
         }
       });
       $.ajax({
@@ -75,76 +87,69 @@
                             .replace(/\|\$/g,'$')
                             .replace(/[Lsg]/g, '-');
           self.loaded += 1;
+
+          if (self.loaded === 4) parser.finish();
         }
       });
     }
-  };
-
-  //raws.load('oasis');
-  //raws.load('u2');
-  raws.load('ac_dc');
+  },
   
-  music.compose = function (callback) {
+  compose: function(callback) {
 
     var instruments = ['guitar', 'bass', 'vocals'];
 
     for (var _i in instruments) {
       var instrument = instruments[_i];
-      var parts = raws[ instrument ].split('$');
+      var parts = this.raws[ instrument ].split('$');
       for (var i = 0; i < parts.length; i++) {
         var strings = parts[i].split('%');
         for (var j = 0; j < strings.length; j++) {
-          var _new = tabs[ instrument ][j].concat(strings[j].split('|'));
-          tabs[ instrument ][j] = _new;
+          var _new = this.tabs[ instrument ][j].concat(strings[j].split('|'));
+          this.tabs[ instrument ][j] = _new;
         }
       }
     }
 
-    music.tactNum = tabs.guitar[5].length;
+    this.music.tactNum = this.tabs.guitar[5].length;
 
     for (var _i in instruments) {
       var instrument = instruments[_i];
-      music[ instrument ] = tabs[ instrument ][0];
+      this.music[ instrument ] = this.tabs[ instrument ][0];
     }
 
     for (var _i in instruments) {
       var instrument = instruments[_i];
-      for (var i = 0; i < music.bass.length - 1; i++) {
-        music[instrument][i] = music[instrument][i].split('');
+      for (var i = 0; i < this.music.bass.length - 1; i++) {
+        this.music[instrument][i] = this.music[instrument][i].split('');
       }
     }
 
     for (var _i in instruments) {
       var instrument = instruments[_i];
-      for (var i = 0; i < tabs[instrument].length; i++) {
-        for (var j = 0; j < music.bass.length - 1; j++) {
-          for (var k = 0; k < tabs[instrument][i][j].length; k++) {
-            if (music[ instrument ][j][k] === '-' && tabs[instrument][i][j][k] !== '-') {
-              music[ instrument ][j][k] = tabs[instrument][i][j][k];
+      for (var i = 0; i < this.tabs[instrument].length; i++) {
+        for (var j = 0; j < this.music.bass.length - 1; j++) {
+          for (var k = 0; k < this.tabs[instrument][i][j].length; k++) {
+            if (this.music[ instrument ][j][k] === '-' && this.tabs[instrument][i][j][k] !== '-') {
+              this.music[ instrument ][j][k] = this.tabs[instrument][i][j][k];
             }
           }
         }
       }
     }
 
-    for (var i = 0; i < music.vocals.length; i++) {
-      for (var j = 0; j < music.vocals[i].length; j++) {
-        if (music.vocals[i][j] !== '-' ) {
-          music.vocals[i][j] = raws.lyrics.pop() || 'o';
+    for (var i = 0; i < this.music.vocals.length; i++) {
+      for (var j = 0; j < this.music.vocals[i].length; j++) {
+        if (this.music.vocals[i][j] !== '-' ) {
+          this.music.vocals[i][j] = this.raws.lyrics.pop() || 'o';
         }
       }
     }
 
     callback();
+  },
+
+  finish: function() {
+    window.band.music = parser.music;
   }
 
-  music.raws = raws;
-
-  var intervalID = setInterval(function () {
-    if (raws.loaded === 4) {
-      window.band.music = music;
-      clearInterval(intervalID);
-    }
-  }, 500);  
-
-}());
+}

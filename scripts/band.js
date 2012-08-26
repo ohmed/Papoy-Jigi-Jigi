@@ -1,10 +1,12 @@
 var band = band || {};
 
+band.interval = false;
+
 band.play = function () {
-  var tempo = player.audio.duration / band.music.tactNum;
+  var tempo = player.duration / band.music.tactNum;
   var self = this;
   var i = 0;
-  var intervalID = setInterval(function () { 
+  band.interval = setInterval(function () { 
 
     band.guitar.play(band.music.guitar[i]);
 
@@ -27,7 +29,7 @@ band.tune = function () {
   var intervalID = setInterval(function () {
     console.log('tuning');
     if (typeof band.music !== 'undefined') {
-      band.music.compose(band.play);
+      parser.compose(band.play);
       clearInterval(intervalID);
     }
   }, 500);
@@ -97,7 +99,7 @@ band.drums = {
 band.guitar = {
   play: function (notes) {
     console.log('guitar-play ' + notes);
-    var tactDuration = 2000 * player.audio.duration / band.music.tactNum + 4000;
+    var tactDuration = 2000 * player.duration / band.music.tactNum + 4000;
     m4.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
@@ -118,7 +120,7 @@ band.guitar = {
 band.bass = {
   play: function (notes) {
     console.log('bass-play ' + notes);
-    var tactDuration = 5000 * player.audio.duration / band.music.tactNum;
+    var tactDuration = 5000 * player.duration / band.music.tactNum;
     m3.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
