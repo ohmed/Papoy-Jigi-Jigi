@@ -111,6 +111,7 @@ function addObjects() {
   mesh.play = 0;
   scene.add(mesh);
   m3 = mesh;
+  m3.timeout = 'x';
   if (DEBUG) console.log('[scene]: added m3');
 
 /* model of m3`s bass-guitar */

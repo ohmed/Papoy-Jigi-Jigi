@@ -68,46 +68,61 @@ var player = {
     $('.time').html( min + ':' + sec );
     $('.progress').css( 'width', 100 * (t/player.audio.duration) + '%' );
   },
-  play: function( trackName ) {
+  play: function( trackInf ) {
 
     var track;
-    if (trackName === undefined) {
-      track = $($('.list tr')[0]).attr('track');
+    if (trackInf === undefined) {
+      track = $($('.list tr')[0]).attr('track').split(':')[0];
     } else {
-      track = trackName;
+      track = trackInf.split(':')[0];
     }
 
-    if (player.audio.src === '' || trackName !== undefined) {
+    if (player.audio.src === '' || trackInf !== undefined) {
       player.currTrack = track;
       parser.clear();
       parser.raws.load( track );
+
+      parser.callback = finish;
+
       m1.play = 0;
+      m1.currentKeyframe = 0;
       m2.play = 0;
+      m2.currentKeyframe = 0;
       m3.play = 0;
+      m3.currentKeyframe = 0;
+      clearTimeout( m3.timeout );
       m4.play = 0;
-      var url = '/resources/audio/' + track + '/' + track + '.ogg';
-      player.duration = 4*60 + 15;
-      player.audio.src = url;
+      m4.currentKeyframe = 0;
+      clearTimeout( m4.timeout );
 
-      player.audio.play();
+      function finish() {
 
-      player.drums.src = '';
-      player.drums = new Audio();
-      player.drums.src = '/resources/audio/' + track + '/' + track + '_drums.ogg';
-      
-      player.drums.play();
+        var url = '/resources/audio/' + track + '/' + track + '.ogg';
+        player.duration = parseInt(trackInf.split(':')[1]);
+        player.audio.src = url;
 
-      player.audio.addEventListener( 'timeupdate', player.time );
+        player.audio.play();
 
-      setTimeout( function() {
-        player.source = player.context.createMediaElementSource(player.drums);
-        player.analyser = player.context.createAnalyser(),
-        player.analyser.smoothingTimeConstant = 0.4;
-        player.source.connect(player.analyser);
-        player.analInt = setInterval(player.analyserProcessor, 35);
-        $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
-        band.tune();
-      }, 30 );
+        player.drums.src = '';
+        player.drums = new Audio();
+        player.drums.src = '/resources/audio/' + track + '/' + track + '_drums.ogg';
+        
+        player.drums.play();
+
+        player.audio.addEventListener( 'timeupdate', player.time );
+
+        setTimeout( function() {
+          player.source = player.context.createMediaElementSource(player.drums);
+          player.analyser = player.context.createAnalyser(),
+          player.analyser.smoothingTimeConstant = 0.4;
+          player.source.connect(player.analyser);
+          try { clearInterval(player.analInt); } catch(e) {}
+          player.analInt = setInterval(player.analyserProcessor, 35);
+          $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
+          band.tune();
+        }, 30 );
+
+      }
 
       return;
     }

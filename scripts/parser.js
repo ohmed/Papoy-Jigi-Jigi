@@ -1,5 +1,9 @@
 var parser = {
 
+  callback: function() {
+
+  },
+
   tabs: {
     'guitar': [[],[],[],[],[],[]],
     'bass': [[],[],[],[]],
@@ -150,6 +154,7 @@ var parser = {
 
   finish: function() {
     window.band.music = parser.music;
+    this.callback();
   }
 
 }

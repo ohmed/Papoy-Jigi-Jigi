@@ -83,7 +83,7 @@ band.vocals = {
     },
     'y': function () {
       console.log('y');
-      // m1.play = 5;//
+      m1.play = 2;
     },
     '-': function () {
     }
@@ -104,7 +104,7 @@ band.guitar = {
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
       if ( notes[i] !== '-' ) {
-        setTimeout( function() {
+        m4.timeout = setTimeout( function() {
           if (m4.play === 0) {
             m4.play = 1;
           }
@@ -124,11 +124,12 @@ band.bass = {
     m3.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
-      if ( notes[i] !== '-' ) {
-        setTimeout( function() {
+      if ( notes[i] !== '-' && m3.timeout === 'x') {
+        m3.timeout = setTimeout( function() {
           if (m3.play === 0) {
             m3.play = Math.round( Math.random() ) + 1;
           }
+          m3.timeout = 'x';
         }, inter);
         inter += m3.duration + 30;
       } else {
