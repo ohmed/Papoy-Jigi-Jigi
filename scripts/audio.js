@@ -73,7 +73,7 @@ var player = {
       player.audio.src = url;
       /*setTimeout( function() {*/ player.audio.play(); //}, 4000 );
 
-      player.drums.src = '/resources/audio/u2/u2_drums.ogg';
+      player.drums.src = '/resources/audio/ac_dc/ac_dc_drums.ogg';
       
       /*setTimeout( function() {*/ player.drums.play(); //}, 1000);
 
