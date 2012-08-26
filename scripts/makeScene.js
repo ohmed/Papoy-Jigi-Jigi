@@ -32,8 +32,8 @@ function addObjects() {
 
 /* model of m1 */
   model = modelLoader.get('m1');
-  model.geometry.materials[ 0 ].morphTargets = true;
-  model.geometry.materials[ 4 ].morphTargets = true;
+  for (var i = 0; i<model.geometry.materials.length; i++)
+    model.geometry.materials[ i ].morphTargets = true;
   mesh = new THREE.Mesh(model.geometry, new THREE.MeshFaceMaterial({ color: 0xffffff, specular : 0xaaaaaa, ambient : 0xffffff, shininess : 1, shading: THREE.SmoothShading }) );
   mesh.position.set(5, 21, 20);
   mesh.scale.set(8, 8, 8);

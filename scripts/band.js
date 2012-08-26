@@ -97,7 +97,7 @@ band.drums = {
 band.guitar = {
   play: function (notes) {
     console.log('guitar-play ' + notes);
-    var tactDuration = 1000 * player.audio.duration / band.music.tactNum;
+    var tactDuration = 2000 * player.audio.duration / band.music.tactNum + 4000;
     m4.duration = Math.round( ( tactDuration / notes.length ) ) + 30;
     var inter = 0;
     for (var i = 0; i<notes.length; i++) {
