@@ -297,3 +297,68 @@ function start() {
 
   $('body').css( { 'background-color': '#fff' } );
 }
+
+function theEnd () {
+  $('#error-screen').css('z-index', '9999');
+  $('#error-screen').css('background-color', 'black');
+  $('#error-screen').show();
+  var error = 'HTTP Status 500 - \r\n\
+\r\n\
+--------------------------------------------------------------------------------\r\n\
+\r\n\
+type Exception report\r\n\
+\r\n\
+message \r\n\
+\r\n\
+description The server encountered an internal error () that prevented it from fulfilling this request.\r\n\
+\r\n\
+exception \r\n\
+\r\n\
+org.apache.jasper.JasperException\r\n\
+    org.apache.jasper.servlet.JspServletWrapper.handleJspException(JspServletWrapper.java:453)\r\n\
+    org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:375)\r\n\
+    org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:314)\r\n\
+    org.apache.jasper.servlet.JspServlet.service(JspServlet.java:264)\r\n\
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:802)\r\n\
+    org.netbeans.modules.web.monitor.server.MonitorFilter.doFilter(MonitorFilter.java:368)\r\n\
+\r\n\
+\r\n\
+root cause \r\n\
+\r\n\
+javax.servlet.ServletException\
+    org.apache.jasper.runtime.PageContextImpl.doHandlePageException(PageContextImpl.java:858)\r\n\
+    org.apache.jasper.runtime.PageContextImpl.handlePageException(PageContextImpl.java:791)\r\n\
+    org.apache.jsp.CustMaint.Jsp.ProfProfileDetails_jsp._jspService(ProfProfileDetails_jsp.java:4016)\r\n\
+    org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:97)\r\n\
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:802)\r\n\
+    org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:332)\r\n\
+    org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:314)\r\n\
+    org.apache.jasper.servlet.JspServlet.service(JspServlet.java:264)\r\n\
+    javax.servlet.http.HttpServlet.service(HttpServlet.java:802)\r\n\
+    org.netbeans.modules.web.monitor.server.MonitorFilter.doFilter(MonitorFilter.java:368)\r\n\
+\r\n\
+\r\n\
+root cause \r\n\
+\r\n\
+java.lang.OutOfMemoryError\r\n\
+\r\n\
+\r\n\
+note The full stack trace of the root cause is available in the Apache Tomcat/5.5.17 logs.\r\n\
+\r\n\
+\r\n\
+--------------------------------------------------------------------------------\r\n\
+\r\n\
+Apache Tomcat/5.5.17'.split('\r\n');
+  var i = 0;
+  var inter = setInterval(function () {
+    $('#error-screen').append('<span>' + error[i] + '</span><br>');
+    i++;
+    if (i == error.length) {
+      $('#error-screen').empty();
+      $('body').css('cursor', 'none');
+      $('#error-screen').css('background', 'url("/resources/img/bsod.jpg") no-repeat');
+      $('#error-screen').css('background-size', 'cover');
+      clearInterval(inter);
+    }      
+  }, 50);
+}
