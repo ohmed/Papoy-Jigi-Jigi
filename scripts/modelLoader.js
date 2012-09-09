@@ -24,6 +24,7 @@ var ModelLoader = function( callback ) {
       modelLoader.objects.push( object );
       
       modelLoader.loadedObjects++;
+      $('#loader').css('width', 100 * (modelLoader.totalObjects / modelLoader.loadedObjects) + '%');
       if (modelLoader.totalObjects === modelLoader.loadedObjects)
         modelLoader.finishCallback();
     }

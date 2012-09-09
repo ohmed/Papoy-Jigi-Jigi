@@ -9,6 +9,7 @@
     <script src="/scripts/lib/jq.js" ></script>
     <script src="/scripts/lib/three.js" ></script>
     <script src="/scripts/lib/stat.js" ></script>
+    <script src="/scripts/lib/full.js" ></script>
     <script type='text/javascript' src="https://github.com/brandonaaron/jquery-cssHooks/raw/master/boxshadow.js"></script>
     <script src="/scripts/modelLoader.js" ></script>
     <script src="/scripts/core.js" ></script>
@@ -17,21 +18,30 @@
     <script src="/scripts/audio.js" ></script>
     <script src="/scripts/band.js" ></script>
     <script src="/scripts/parser.js" ></script>
+
+    <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?52"></script>
+
+    <script type="text/javascript">
+      VK.init({apiId: 3099070, onlyWidgets: true}, 1);
+    </script>
   </head>
 
-  <body>
+  <body id="b" >
     <div class="main" ></div>    
     <div class="warning" >
       <img src="resources/img/warning.gif" />
       <span id="attention">Attention</span>      
-      <span>WebGL, Web Audio API</span>
+      <span>Шкідливо для мозку</span>
     </div>
-    <div id="error-screen" >
+    <div id="error-screen" ></div>
+    <div id="loader" >
+      <span>Loading...</span>
+      <div id="load-progress"></div>
     </div>
     <div class="controls">
     <div class="startBtn">Start</div>
       <div class="player">
-        <div class="title" state="closed" >Open controls</div>
+        <div class="title" state="closed" >Відкрийте, щоб почати</div>
         <div class="playBtn" ></div>
         <div class="time" >0:00</div>
         <div class="progress-bar" ><div class="progress"></div></div>
@@ -44,7 +54,25 @@
         </div>
       </div>
     </div>
-    <div class="footer" ></div>
+    <div class="footer" >ohmed & luspav 2012</div>
+
+    <div id="g-plusone-wrapper" >
+      <div class="g-plusone"></div>
+      <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpapoy-jigi-jigi.appspot.com%2F&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=verdana&amp;height=21&amp;appId=311209418978372" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
+      <div id="vk_like"></div>
+      <script type="text/javascript">
+      VK.Widgets.Like("vk_like", {type: "mini"});
+      </script>
+    </div>
+
+    <script type="text/javascript">
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
+
   </body>
 
 </html>

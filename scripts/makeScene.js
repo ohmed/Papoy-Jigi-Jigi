@@ -8,6 +8,8 @@ var m1, m2, m3, m4, d1, d2;
 
 function addObjects() {
 
+  $('#loader').css('display', 'none');
+
   var mesh;
 
 /* plakat */
@@ -241,6 +243,9 @@ function addLights() {
 function loadModels() {
 
 /* load models */
+
+  $('#loader').css('display', 'block');
+
   modelLoader = new ModelLoader( preparations );
   modelLoader.totalObjects = 9;
   modelLoader.load( { name: 'm1', model: 'resources/models/m1.js' } );
@@ -297,15 +302,24 @@ function preparations() {
 
 function start() {
   $('.startBtn').animate( {'width': '0px', 'left': '150px', 'opacity': '0'}, 300, function() {
-    $('.warning').css('display', 'none');
-    $(this).css('display', 'none');
-    $('.player').css('display', 'block');
-    setTimeout( function() { $('.player').animate({'opacity': '1'}, 1300); }, 1000);
-    player.init();
-    loadModels();
+    setTimeout( function() {
+      $('.warning').css('display', 'none');
+      $(this).css('display', 'none');
+      $('.player').css('display', 'block');
+      setTimeout( function() { $('.player').animate({'opacity': '1'}, 1300); }, 1000);
+      player.init();
+      loadModels();
+      /* add resize event handler */
+      function onWindowResize( event ) {
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener( 'resize', onWindowResize, false );
+    }, 400);
   } );
   $('.warning').css('display', 'none');
-
+  screenfull.request();
   $('body').css( { 'background-color': '#fff' } );
 }
 

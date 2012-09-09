@@ -141,6 +141,8 @@ var parser = {
       }
     }
 
+    this.raws.lyrics = this.raws.lyrics.reverse();
+
     for (var i = 0; i < this.music.vocals.length; i++) {
       for (var j = 0; j < this.music.vocals[i].length; j++) {
         if (this.music.vocals[i][j] !== '-' ) {

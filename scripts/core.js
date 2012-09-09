@@ -1,7 +1,14 @@
 var DEBUG = true;
 
 function init () {
-  
+
+  if (typeof webkitAudioContext !== "function") {
+    $('.startBtn').html('поки лише у хромі :(');
+    $('.startBtn').css( { 'width': '220px', 'left': '10px' } );
+  } else {
+    $('.startBtn').click( start );
+  }
+
   function active() {
     $('.startBtn').animate( { 'boxShadowBlur': '20px' }, 700, disactive);
   }
@@ -11,8 +18,7 @@ function init () {
   }
 
   disactive(); 
-  $('.startBtn').click( start );
-}
 
+}
 
 $(document).ready( init );

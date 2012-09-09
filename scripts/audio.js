@@ -10,7 +10,7 @@ var player = {
   currend: 0,
   list: [],
   source: false,
-  context: new webkitAudioContext(),
+  context: false,
   analyser: false,
   volumeLevel: 0,
   analInt: 0,
@@ -92,6 +92,10 @@ var player = {
       player.play( $($('.list tr')[n]).attr('track') );
 
     }
+
+    if (player.audio.buffered.end(0) <= Math.round( 100 * t/player.audio.duration) )
+      this.pauseResumeVisual(true);
+
   },
   play: function( trackInf ) {
 
@@ -155,7 +159,7 @@ var player = {
         $($('tr span')[n]).html(' (ON)');
         
       }
-
+      $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
       return;
     }
 
@@ -163,7 +167,17 @@ var player = {
       $('.playBtn').css('background-image', 'url("/resources/img/play.png")');
       player.drums.pause();
       player.audio.pause();
+      this.pauseResumeVisual(true);
+    } else {
+      $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
+      player.audio.play();
+      player.drums.play();
+      this.pauseResumeVisual(false);
+    }
 
+  },
+  pauseResumeVisual: function(state) {
+    if (state) {
       m1.play = 0;
       m1.currentKeyframe = 0;
       m2.play = 0;
@@ -176,15 +190,10 @@ var player = {
       m4.currentKeyframe = 0;
       clearTimeout( m4.timeout );
       m4.timeout = 'x';
-
       clearInterval(band.interval);
     } else {
-      $('.playBtn').css('background-image', 'url("/resources/img/pause.png")');
-      player.audio.play();
-      player.drums.play();
       band.play();
     }
-
   },
   playTrack: function() {
     clearInterval(band.interval);
@@ -192,22 +201,32 @@ var player = {
   },
   init: function() {
     
+    if (typeof webkitAudioContext === "function") {
+      player.context = new webkitAudioContext();
+    }
+
     /* setting handlers */
     $('.player .title').click( function() {
       if ($(this).attr('state') === 'closed') {
         $('.player').animate({'height': '150px'}, 400);
         $(this).attr('state', 'opened');
-        $(this).html('Close controls');
+        $(this).html('Закрити, щоб не заважало');
         $(this).css( 'border-radius', '10px 10px 0px 0px');
       } else {
         $('.player').animate({'height': '30px'}, 400);
         $(this).attr('state', 'closed');
-        $(this).html('Open controls');
+        $(this).html('Відкрийте, щоб почати');
         $(this).css( 'border-radius', '10px 10px 10px 10px');
       }
     });
 
-    $('.playBtn').click( function() { player.play(); } );
+    $('.playBtn').click( function() {
+      if (player.audio.src === '') {
+        player.play( $($('tr')[0]).attr('track') );
+      } else {
+        player.play();
+      }
+    } );
 
     $('.list tr').click(player.playTrack);
 
